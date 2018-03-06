@@ -2,10 +2,23 @@
   "name": "webscrubbing",
   "version": "1.0.0",
   "description": "REST API for web scrubbing (home assignment).",
-  "main": "index.js",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shirleyar/WebScrubbing.git"
+  },
   "scripts": {
     "test": "test"
   },
   "author": "Shirley Arusi",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bunyan": "^1.8.12",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.4",
+    "nodemon": "^1.17.1",
+    "request": "^2.83.0"
+  }
 }
