@@ -1,0 +1,11 @@
+{
+  "name": "webscrubbing",
+  "version": "1.0.0",
+  "description": "REST API for web scrubbing (home assignment).",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Shirley Arusi",
+  "license": "ISC"
+}
