@@ -9,24 +9,26 @@ const request = require('request-promise'),
     LINK_ATTR_NAME = constants.LINK_ATTR_NAME;
 
 module.exports.getLinks = function (uri) {
-    let options = {
-        uri: uri,
-        transform: body => {
-            return cheerio.load(body);
-        }
-    };
-    return request(options)
-        .then($ => {
-            let linksSet = new Set();
-            let absoluteLinks = $(ABSOLUTE_LINKS_REGEX);
-            $(absoluteLinks).each((i, link) => {
-                linksSet.add($(link).attr(LINK_ATTR_NAME));
-            });
-            return Promise.resolve(Array.from(linksSet));
-        }).catch(error => {
-            logger.error(error);
-            return Promise.reject(error);
-        })
+    return new Promise((resolve, reject) => {
+        let options = {
+            uri: uri,
+            transform: body => {
+                return cheerio.load(body);
+            }
+        };
+        return request(options)
+            .then($ => {
+                let linksSet = new Set();
+                let absoluteLinks = $(ABSOLUTE_LINKS_REGEX);
+                $(absoluteLinks).each((i, link) => {
+                    linksSet.add($(link).attr(LINK_ATTR_NAME));
+                });
+                resolve(Array.from(linksSet));
+            }).catch(error => {
+                logger.error("Error during scrubbing: %s", error.message);
+                reject(error);
+            })
+    })
 };
 // let relativeLinks = $("a[href^='/']");
 // $(absoluteLinks).each((i, link) => {

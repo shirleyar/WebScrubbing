@@ -11,61 +11,66 @@ const MongoClient = require('mongodb').MongoClient,
 var database, collection;
 
 function connect() {
-    return MongoClient.connect(MONGODB_URL, (error, client) => {
-        if (error) {
+    return MongoClient.connect(MONGODB_URL, null)
+        .then(client => {
+            database = client.db(constants.MONGODB_DB_NAME);
+            collection = database.collection(MONGODB_COLLECTION_NAME);
+            logger.info('MongoDb connected successfully');
+            return Promise.resolve();
+        }).catch(error => {
             logger.error(error);
             return Promise.reject(error);
-        }
-        database = client.db(constants.MONGODB_DB_NAME);
-        collection = database.collection(MONGODB_COLLECTION_NAME);
-        logger.info('MongoDb connected successfully');
-        return Promise.resolve();
-    });
+        })
 }
 
 function getAllLinks() {
-    collection.find({}).toArray((error, result) => {
-        if (error) {
-            logger.error(error);
-            return Promise.reject(error);
-        }
-        logger.info('Fetched from DB all documents');
-        logger.debug('Fetched from DB all documents: %j', result);
-        return Promise.resolve(result);
+    return new Promise ((resolve, reject) => {
+        collection.find().toArray((error, result) => {
+            if (error) {
+                logger.error(error);
+                reject(error);
+            }
+            logger.info('Fetched from DB all documents');
+            logger.debug('Fetched from DB all documents: %j', result);
+            resolve(result);
+        })
     })
 }
 
-function getLinksByOriginAndIdempotencyKey (origin_link, idempotency_key) {
-    let query = {origin: origin_link, idempotency_key: idempotency_key};
-    collection.find(query).toArray((error, result) => {
-        if (error) {
-            logger.error(error);
-            return Promise.reject(error);
-        }
-        logger.info('Fetched from DB by origin link and idempotency key');
-        logger.debug('Fetched from DB by origin link and idempotency key: %j', result);
-        return Promise.resolve(result);
-    })
-
+function getLinksByOriginAndIdempotencyKey(origin_link, idempotency_key) {
+    return new Promise((resolve, reject) => {
+        let query = {origin: origin_link, idempotency_key: idempotency_key};
+        collection.find(query).toArray((error, result) => {
+            if (error) {
+                logger.error(error);
+                reject(error);
+            }
+            logger.info('Fetched from DB by origin link and idempotency key');
+            logger.debug('Fetched from DB by origin link and idempotency key: %j', result);
+            resolve(result);
+        })
+    });
 }
 
 function saveLinks(data) {
-    if (_.isEmpty(data)) {
-        logger.error(constants.ERROR_DATA_IS_EMPTY);
-        return Promise.reject(constants.ERROR_DATA_IS_EMPTY);
-    }
-    collection.insert(data, (error,result) => {
-        if (error) {
-            logger.error(error);
-            return Promise.reject(error);
+    return new Promise((resolve, reject) => {
+        if (_.isEmpty(data)) {
+            logger.error(constants.ERROR_DATA_IS_EMPTY);
+            reject(constants.ERROR_DATA_IS_EMPTY);
         }
-        logger.info('Data inserted to db');
-        logger.debug('Data inserted to db: %j, data');
-        return Promise.resolve(result);
+        collection.insert(data, (error, result) => {
+            if (error) {
+                logger.error(error);
+                reject(error);
+            }
+            logger.info('Data inserted to db');
+            logger.debug('Data inserted to db: %j, data');
+            resolve(result);
+        })
     })
 }
 
-module.exports= {
+module.exports = {
     connect,
     getAllLinks,
     getLinksByOriginAndIdempotencyKey,

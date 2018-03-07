@@ -2,14 +2,14 @@
 const _ = require('lodash'),
     logger = require('../Helpers/logger');
 
-module.exports = function (origin, links, idempotency_key) {
+module.exports.buildObj = function (origin, links, idempotency_key) {
     if (!_.isArray(links)) {
         throw ("links is not an array");
     }
 
     let linksObj = {
         origin: origin,
-        time: Date.now(),
+        time: new Date().toUTCString(),
         idempotency_key: idempotency_key,
         links: links,
     };
