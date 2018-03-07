@@ -64,3 +64,10 @@ function saveLinks(data) {
         return Promise.resolve(result);
     })
 }
+
+module.exports= {
+    connect,
+    getAllLinks,
+    getLinksByOriginAndIdempotencyKey,
+    saveLinks
+};

@@ -1,7 +1,9 @@
 module.exports = {
     // General
     APP_NAME: process.env.APP_NAME || "Web Scrubbing",
-    PORT: process.env.PORT || 8080,
+    PORT: process.env.PORT || 3000,
+    VERSION: process.env.VERSION || 'v1',
+    BASE_URL: process.env.BASE_URL || "/webScrubbing/api",
 
     // DB related
     MONGODB_USER: process.env.MONGODB_USER || 'admin',
