@@ -18,7 +18,7 @@ function connect() {
             logger.info('MongoDb connected successfully');
             return Promise.resolve();
         }).catch(error => {
-            logger.error(error);
+            logger.error("Error during MongoDb connection: ", error.message);
             return Promise.reject(error);
         })
 }
@@ -27,11 +27,11 @@ function getAllLinks() {
     return new Promise ((resolve, reject) => {
         collection.find().toArray((error, result) => {
             if (error) {
-                logger.error(error);
+                logger.error("Error during retrieval of all data from MongoDb:", error.message);
                 reject(error);
             }
-            logger.info('Fetched from DB all documents');
-            logger.debug('Fetched from DB all documents: %j', result);
+            logger.info('Fetched from MongoDb all documents');
+            logger.debug('Fetched from MongoDb all documents: %j', result);
             resolve(result);
         })
     })
@@ -42,7 +42,7 @@ function getLinksByOriginAndIdempotencyKey(origin_link, idempotency_key) {
         let query = {origin: origin_link, idempotency_key: idempotency_key};
         collection.find(query).toArray((error, result) => {
             if (error) {
-                logger.error(error);
+                logger.error("Error during retrieval of a specific document from MongoDb: ", error.message);
                 reject(error);
             }
             logger.info('Fetched from DB by origin link and idempotency key');
@@ -60,11 +60,11 @@ function saveLinks(data) {
         }
         collection.insert(data, (error, result) => {
             if (error) {
-                logger.error(error);
+                logger.error("Error during saving links in MongoDb: ", error.message);
                 reject(error);
             }
             logger.info('Data inserted to db');
-            logger.debug('Data inserted to db: %j, data');
+            logger.debug('Data inserted to db: %j', data);
             resolve(result);
         })
     })

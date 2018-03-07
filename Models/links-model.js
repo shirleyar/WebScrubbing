@@ -4,7 +4,8 @@ const _ = require('lodash'),
 
 module.exports.buildObj = function (origin, links, idempotency_key) {
     if (!_.isArray(links)) {
-        throw ("links is not an array");
+        logger.error("links parameter for model is not an array: ", links);
+        throw ("links parameter is not an array");
     }
 
     let linksObj = {
@@ -14,7 +15,7 @@ module.exports.buildObj = function (origin, links, idempotency_key) {
         links: links,
     };
 
-    logger.info('Built a links object for link: ', origin);
-    logger.debug('Built a links object: %j', linksObj);
+    logger.info('Built a link object for link: ', origin);
+    logger.debug('Built link object: %j', linksObj);
     return linksObj;
 };

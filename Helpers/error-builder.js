@@ -1,7 +1,8 @@
 'use strict';
 
-module.exports = function (message) {
+module.exports = function (message, code) {
     return {
-        message: message
+        message: message,
+        code: code
     }
 };

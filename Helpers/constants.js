@@ -1,11 +1,15 @@
 module.exports = {
     // General
     APP_NAME: process.env.APP_NAME || "Web Scrubbing",
+    LOG_LEVEL: "info",
     PORT: process.env.PORT || 3000,
     VERSION: process.env.VERSION || 'v1',
     BASE_URL: process.env.BASE_URL || "/webScrubbing/api",
     URL_REGEX: "/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/",
+
     // DB related
+    // Should all be hidden and saved as environment variable (security matters and stuff) but since this is merely a home assignment and there's nothing important saved (DB will probably be erased once done)
+    // didn't bother to hide.
     MONGODB_USER: process.env.MONGODB_USER || 'scrubApp',
     MONGODB_PASSWORD: process.env.MONGODB_PASS || "123456",
     MONGODB_URL: 'mongodb://%s:%s@ds259258.mlab.com:59258/web-scrubbing-links',

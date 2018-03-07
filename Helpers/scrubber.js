@@ -2,7 +2,6 @@
 
 const request = require('request-promise'),
     cheerio = require('cheerio'),
-    // format = require('util').format,
     logger = require('./logger'),
     constants = require('./constants'),
     ABSOLUTE_LINKS_REGEX = constants.ABSOLUTE_LINKS_REGEX,
@@ -30,17 +29,3 @@ module.exports.getLinks = function (uri) {
             })
     })
 };
-// let relativeLinks = $("a[href^='/']");
-// $(absoluteLinks).each((i, link) => {
-//     linksSet.add(format('%s%s',url,$(link).attr('href')));
-// });
-// function formatRelativeLink(url, path) {
-//     let link;
-//
-//     if (url.slice(-1) === '/') {
-//         link = url.substr(0, url.length-1);
-//     }
-//
-//     while ('')
-//     return link;
-// }
