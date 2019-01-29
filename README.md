@@ -1,6 +1,6 @@
 # Web Scrubbing (home assignment)
 
-REST API for scrubbing a web page. Saved links are stored in a MongoDb database.
+REST API for scrubbing urls in a web page. Saved links are stored in a MongoDb database.
 
 ****base url: `/webScrubbing/api/v1`****
 
